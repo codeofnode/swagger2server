@@ -1,0 +1,66 @@
+{
+  "name": "swagger2server",
+  "version": "0.0.0",
+  "description": "A utility to start server from swagger file",
+  "scripts": {
+    "start": "./node_modules/.bin/nodemon --watch src --exec \"./node_modules/.bin/babel-node ./src/bin/swagger2server -f src/swagger.yml\"",
+    "build": "rm -rf dist && mkdir dist && ./node_modules/.bin/babel src -d dist && ./node_modules/.bin/babel-node scripts/build.js && cp README.md dist/",
+    "test": "npm run allrounder -- -s src",
+    "prodtest": "npm run allrounder -- -s dist",
+    "allrounder": "./node_modules/.bin/cross-env NODE_ENV=test ./node_modules/.bin/nyc ./node_modules/.bin/allrounder",
+    "all": "npm run lint && npm test && npm run build && npm run prodtest && npm run docs",
+    "docs": "./node_modules/.bin/jsdoc -c .jsdoc.json",
+    "lint": "./node_modules/.bin/eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/codeofnode/swagger2server.git"
+  },
+  "keywords": [
+    "swagger",
+    "yml",
+    "server",
+    "utility",
+    "openapi"
+  ],
+  "author": "Ramesh Kumar <codeofnode@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/codeofnode/swagger2server",
+  "devDependencies": {
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.4",
+    "@babel/node": "^7.5.0",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/register": "^7.4.4",
+    "allrounder": "latest",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0",
+    "jsdoc": "^3.6.2",
+    "minami": "^1.2.3",
+    "nodemon": "^1.19.1",
+    "nyc": "^14.1.1"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "nyc": {
+    "require": [
+      "@babel/register"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "sourceMap": false,
+    "instrument": false
+  },
+  "engines": {
+    "node": ">=10.16.0"
+  },
+  "private": true,
+  "dependencies": {}
+}
